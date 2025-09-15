@@ -125,6 +125,8 @@ export const Convo = () => {
             setConversation([]);
             setSessionId(crypto.randomUUID());
             setShowAssistantIntroduction(false);
+            setAssistantHasBeenSelected(false);
+            setPendingAssistantName('');
           }
           
           // Refresh the conversation list
@@ -132,7 +134,7 @@ export const Convo = () => {
         }
       }
     );
-  }, [backendUrl, fetchApi.fetch, userId]);
+  }, [backendUrl, fetchApi.fetch, userId, sessionId]);
 
   useEffect(() => {
     const handleLinkClick = (event: Event) => {
@@ -394,15 +396,21 @@ export const Convo = () => {
       return;
     }
     
+    // Cancel any ongoing requests (like assistant introduction) to prevent concurrent responses
+    recycleAbortController();
+    
+    // Hide assistant introduction if it's showing since user is sending a message
+    setShowAssistantIntroduction(false);
+    
     setUserInputMessage('');
     const conversationEntry: ConversationMessage = {
       text: msg,
       sender: USER,
       done: false,
     };
-    setConversation([...conversation, conversationEntry]);
+    setConversation(prevConversation => [...prevConversation, conversationEntry]);
     setAssistantHasBeenSelected(true);
-  }, [assistantsLoading, selectedAssistant.id, conversation]);
+  }, [assistantsLoading, selectedAssistant.id]);
 
   const ShowErrorMessage = () => {
     if (error) {
@@ -471,7 +479,14 @@ export const Convo = () => {
       
       if (selectedConversation) {
         recycleAbortController();
-        setConversation(selectedConversation.payload || []);
+        // Validate payload is an array before setting conversation
+        const payload = selectedConversation.payload;
+        if (Array.isArray(payload)) {
+          setConversation(payload);
+        } else {
+          console.warn('Invalid conversation payload, starting with empty conversation:', payload);
+          setConversation([]);
+        }
         setError(false);
         setLoading(false);
         setResponseIsStreaming(false);
