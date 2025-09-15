@@ -41,11 +41,14 @@ export const getConversations = (
             return bDate - aDate;
           })
           .map((conversation: any, idx: number) => {
-            // Generate more stable fallback ID to avoid collisions
-            const fallbackId = `conversation_${conversation.session_id || Date.now()}_${idx}`;
+            // Use session_id as primary identifier since it's required for operations
+            // Fall back to conversation.id if session_id is missing
+            // Generate stable fallback only if both are missing
+            const fallbackId = `conversation_fallback_${idx}_${Date.now()}`;
+            const primaryId = conversation.session_id || conversation.id || fallbackId;
             return { 
               text: conversation.title, 
-              id: conversation.id || conversation.session_id || fallbackId,
+              id: primaryId,
               payload: conversation.payload.prevMsgs,
               sessionId: conversation.session_id,
               assistant_name: conversation.assistant_name
