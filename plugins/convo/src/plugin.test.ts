@@ -1,7 +1,7 @@
-import { aiSearchFrontendPlugin } from './plugin';
+import { convoFrontendPlugin } from './plugin';
 
-describe('ai-search-frontend', () => {
+describe('convo-frontend', () => {
   it('should export plugin', () => {
-    expect(aiSearchFrontendPlugin).toBeDefined();
+    expect(convoFrontendPlugin).toBeDefined();
   });
 });

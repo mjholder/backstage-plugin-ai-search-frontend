@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Card,
   CardTitle,
@@ -22,7 +22,7 @@ export const CitationsCard: React.FC<{ citations: any[] }> = ({
 
   const [currentCitationIndex, setCurrentCitationIndex] = React.useState(0);
   const [isExpanded, setIsExpanded] = React.useState(false);
-  const truncate = (text, maxLength = 50) => {
+  const truncate = (text: string, maxLength = 50) => {
     if (!text) return '';
     return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
   };
