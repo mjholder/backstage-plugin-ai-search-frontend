@@ -156,14 +156,19 @@ export const getAssistants = (
   fetchFunc(`${backendUrl}/api/proxy/tangerine/api/assistants`, requestOptions)
     .then(response => response.json())
     .then(response => {
-      setAssistants(response.data.sort((a, b) => a.name.localeCompare(b.name)));
+      setAssistants(
+        response.data.sort((a: { name: string }, b: { name: string }) =>
+          a.name.localeCompare(b.name),
+        ),
+      );
       
       // Only try to select an assistant if we have assistants
       if (response.data && response.data.length > 0) {
         // HACK: Look for an assistant named "'inscope-all-docs'" and select it by default
         // if it isn't there just use the first assistant
-        const allDocsAssistant = response.data.find(assistant =>
-          assistant.name.includes('inscope-all-docs'),
+        const allDocsAssistant = response.data.find(
+          (assistant: { name: string }) =>
+            assistant.name.includes('inscope-all-docs'),
         );
         if (allDocsAssistant) {
           setSelectedAssistant(allDocsAssistant);
@@ -270,17 +275,23 @@ const sendQueryToServer = async (
 
     return response;
   } catch (error) {
-    throw new Error(`Failed to send query to server: ${error.message}`);
+    const message = error instanceof Error ? error.message : String(error);
+    throw new Error(`Failed to send query to server: ${message}`);
   }
 };
 
 const createStreamReader = (response: Response) => {
   try {
-    return response.body
+    const body = response.body;
+    if (!body) {
+      throw new Error('Response body is null');
+    }
+    return body
       .pipeThrough(new TextDecoderStream('utf-8'))
       .getReader();
   } catch (error) {
-    throw new Error(`Failed to create stream reader: ${error.message}`);
+    const message = error instanceof Error ? error.message : String(error);
+    throw new Error(`Failed to create stream reader: ${message}`);
   }
 };
 

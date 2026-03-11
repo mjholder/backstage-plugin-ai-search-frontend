@@ -1,6 +1,6 @@
 {
   "name": "@redhatinsights/backstage-plugin-convo-frontend",
-  "version": "1.1.9",
+  "version": "1.2.0",
   "main": "src/index.ts",
   "types": "src/index.ts",
   "license": "Apache-2.0",
@@ -25,30 +25,35 @@
     "export-dynamic": "janus-cli package export-dynamic-plugin"
   },
   "dependencies": {
-    "@backstage/core-components": "^0.16.3",
-    "@backstage/core-plugin-api": "^1.10.3",
-    "@backstage/theme": "^0.6.3",
+    "@backstage/core-components": "^0.18.7",
+    "@backstage/core-plugin-api": "^1.12.3",
+    "@backstage/theme": "^0.7.2",
     "@material-ui/core": "^4.9.13",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "4.0.0-alpha.61",
     "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.16.7",
+    "@patternfly/chatbot": "2.1.0",
     "@patternfly/patternfly": "^6",
     "@patternfly/react-core": "^6",
     "@patternfly/react-styles": "^6",
-    "@patternfly/chatbot": "2.1.0",
     "mui-markdown": "^1.2.1",
     "react-markdown": "^9.0.1",
     "react-use": "^17.2.4"
   },
   "peerDependencies": {
-    "react": "^16.13.1 || ^17.0.0 || ^18.0.0"
+    "@emotion/react": "^11.0.0",
+    "@emotion/styled": "^11.0.0",
+    "markdown-to-jsx": "^7.0.0",
+    "react": "^16.13.1 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.13.1 || ^17.0.0 || ^18.0.0",
+    "react-router-dom": ">=6.0.0"
   },
   "devDependencies": {
-    "@backstage/cli": "^0.29.6",
-    "@backstage/core-app-api": "^1.15.4",
+    "@backstage/cli": "^0.35.4",
+    "@backstage/core-app-api": "^1.19.5",
     "@backstage/dev-utils": "^1.1.6",
-    "@backstage/test-utils": "^1.7.4",
+    "@backstage/test-utils": "^1.7.15",
     "@janus-idp/cli": "^1.13.0",
     "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^14.0.0",

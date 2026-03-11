@@ -1,12 +1,11 @@
-import React from 'react';
 import { createDevApp } from '@backstage/dev-utils';
-import { aiSearchFrontendPlugin, AISearchFrontendPage } from '../src/plugin';
+import { convoFrontendPlugin, ConvoFrontendPage } from '../src/plugin';
 
 createDevApp()
-  .registerPlugin(aiSearchFrontendPlugin)
+  .registerPlugin(convoFrontendPlugin)
   .addPage({
-    element: <AISearchFrontendPage />,
-    title: 'Root Page',
-    path: '/ai-search-frontend',
+    element: <ConvoFrontendPage />,
+    title: 'Convo: AI Search',
+    path: '/convo',
   })
   .render();
